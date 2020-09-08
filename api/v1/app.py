@@ -9,8 +9,6 @@ from os import getenv
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
-
-
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 
@@ -18,7 +16,7 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def tear_down(error):
     """
-	Deletes the current SQLAlchemy Session
+    Deletes the current SQLAlchemy Session
     """
     storage.close()
 
@@ -26,15 +24,15 @@ def tear_down(error):
 @app.errorhandler(404)
 def not_found(message):
     """
-	404 error page in json
+    404 error page in json
     """
-    return jsonify({"error": "Not found"}), 404e
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
-	"""
-	sets port/host name
-	"""
+    """
+    sets port/host name
+    """
     host = os.getenv("HBNB_API_HOST", default='0.0.0.0')
     ports = int(os.getenv("HBNB_API_PORT", default=5000))
     app.run(host=hosts, port=ports, threaded=True)
