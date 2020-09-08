@@ -96,7 +96,7 @@ class DBStorage:
         """
         if cls is None:
             return len(models.storage.all().values())
-        elif cls not in classes.keys():
+        elif cls not in classes.values():
             return 0
         else:
             return len(models.storage.all(cls).values())

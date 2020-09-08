@@ -95,7 +95,7 @@ class FileStorage:
         count = 0
         if cls is None:
             return len(models.storage.all())
-        elif cls in classes.keys():
+        elif cls in classes.values():
             return len(models.storage.all(cls))
         else:
             return 0
