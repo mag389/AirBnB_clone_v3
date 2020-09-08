@@ -77,7 +77,12 @@ class FileStorage:
         cls: string containing class name
         id: string containing object ID
         '''
+        if not cls:
+            return None
+        if not id:
+            return None
         return self.__objects.get(str(cls.__name__) + "." + id)
+
 
     def count(self, cls=None):
         """
