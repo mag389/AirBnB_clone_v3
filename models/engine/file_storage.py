@@ -83,7 +83,6 @@ class FileStorage:
             return None
         return self.__objects.get(str(cls.__name__) + "." + id)
 
-
     def count(self, cls=None):
         """
         Gets the count of objects

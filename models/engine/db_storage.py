@@ -94,7 +94,7 @@ class DBStorage:
         """
             Returns the number of objects in storage matching the given class
         """
-        if cls == None:
+        if cls is None:
             return len(models.storage.all().values())
         elif cls not in classes.keys():
             return 0
