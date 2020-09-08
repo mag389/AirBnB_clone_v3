@@ -32,6 +32,6 @@ if __name__ == '__main__':
     """
     sets port/host name
     """
-    host = os.getenv("HBNB_API_HOST", default='0.0.0.0')
-    ports = int(os.getenv("HBNB_API_PORT", default=5000))
-    app.run(host=hosts, port=ports, threaded=True)
+    host = getenv("HBNB_API_HOST", default='0.0.0.0')
+    ports = int(getenv("HBNB_API_PORT", default=5000))
+    app.run(host=host, port=ports, threaded=True)
