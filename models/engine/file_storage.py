@@ -77,7 +77,7 @@ class FileStorage:
         cls: string containing class name
         id: string containing object ID
         '''
-        if cls not in models.classes.keys():
+        if cls not in classes.keys():
             return None
         for item in models.storage.all(cls).values():
             if item.id == id:
@@ -95,10 +95,8 @@ class FileStorage:
 
         count = 0
         if cls is None:
-            for objects in self.__objects:
-                count += 1
+            return len(models.storage.all())
+        elif cls in classes.keys():
+            return len(models.storage.all(cls))
         else:
-            for objects in self.__objects:
-                if cls in objects:
-                    count += 1
-        return count
+            return 0
