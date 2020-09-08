@@ -28,13 +28,13 @@ def not_found(message):
     """
 	404 error page in json
     """
-    return jsonify({"error": "Not found"}), 404e
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
-	"""
-	sets port/host name
-	"""
+    """
+    sets port/host name
+    """
     host = os.getenv("HBNB_API_HOST", default='0.0.0.0')
     ports = int(os.getenv("HBNB_API_PORT", default=5000))
     app.run(host=hosts, port=ports, threaded=True)
