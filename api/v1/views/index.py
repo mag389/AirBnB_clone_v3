@@ -4,7 +4,7 @@ from api.v1.views import app_views
 from flask import jsonify
 import models
 from models import storage
-from models.amentiy import Amenity
+from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
