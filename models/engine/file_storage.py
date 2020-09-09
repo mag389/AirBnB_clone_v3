@@ -86,7 +86,7 @@ class FileStorage:
         for object in models.storage.all(cls).values():
             if object.id == id:
                 return object
-        #return self.__objects.get(str(cls.__name__) + "." + id)
+        return self.__objects.get(str(cls.__name__) + "." + id)
 
     def count(self, cls=None):
         """
