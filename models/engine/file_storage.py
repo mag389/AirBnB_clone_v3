@@ -71,12 +71,12 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        '''
+        """
         Retrieve an object based on ID
         Args:
         cls: string containing class name
         id: string containing object ID
-        '''
+        """
         if not cls:
             return None
         if not id:
