@@ -84,8 +84,8 @@ class DBStorage:
         Returns:
             object that matches query otherwise None
         """
-        objects = self.__session.query(models.classes[cls]).all()
-        for object in self.__session.query(models.classes[cls]).all():
+        objects = self.__session.query(cls).all()
+        for object in self.__session.query(cls).all():
             if object.id == str(id):
                 return object
         return None
@@ -94,9 +94,9 @@ class DBStorage:
         """
             Returns the number of objects in storage matching the given class
         """
-        if cls == None:
-            return len(models.storage.all("").values())
-        elif cls not in models.classes.keys():
+        if cls is None:
+            return len(models.storage.all().values())
+        elif cls not in classes.values():
             return 0
         else:
             return len(models.storage.all(cls).values())
