@@ -66,13 +66,16 @@ def place_post(city_id):
     if storage.get(City, city_id) is None:
         abort(404)
     if req is None:
-        abort(400, "Not a JSON")
+        return "Not a JSON", 400
+        # abort(400, "Not a JSON")
     if "user_id" not in req:
-        abort(400, "Missing user_id")
+        return "Missing user_id", 400
+        # abort(400, "Missing user_id")
     if storage.get(User, req["user_id"]) is None:
         abort(404)
     if "name" not in req:
-        abort(400, "Missing name")
+        return "Missing name", 400
+        # abort(400, "Missing name")
     req["city_id"] = city_id
     new_place = models.place.Place(**req)
     # setattr(new_place, "city_id", city_id)
@@ -89,7 +92,8 @@ def place_update(place_id):
         abort(404)
     req = request.get_json()
     if req is None:
-        abort(400, "Not a JSON")
+        return "Not a JSON", 400
+        # abort(400, "Not a JSON")
     req.pop("id", None)
     req.pop("created_at", None)
     req.pop("updated_at", None)
