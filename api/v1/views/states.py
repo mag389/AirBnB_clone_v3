@@ -21,26 +21,25 @@ def show_states():
 def show_state(state_id):
     """Shows a specific state based on id
     """
-    state = storage.get('State', state_id)
-    if state:
-        return jsonify(state.to_dict())
-    else:
+    states_list = storage.all("State")
+    full_id = "State." + state_id
+    try:
+        state_object = states_list.get(full_id).to_dict()
+        return jsonify(state_object)
+    except Exception:
         abort(404)
-
 
 @app_views.route(
     '/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """Deletes a state based on storage id
     """
-    state = storage.get('State', state_id)
-    if state:
-        storage.delete(state)
-        storage.save()
-        return jsonify({})
-    else:
+    state_to_delete = storage.get(State, state_id)
+    if state_to_delete is None:
         abort(404)
-
+    storage.delete(state_to_delete)
+    storage.save()
+    return jsonify({})
 
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def create_state():
@@ -52,35 +51,30 @@ def create_state():
         json_data = request.get_json()
         if "name" not in json_data:
             return jsonify({"error": "Missing name"}), 400
-        new_object = State(name=json_data["name"])
-        new_object.save()
-        return jsonify(new_object.to_dict()), 201
+        new_state = State(name=json_data["name"])
+        new_state.save()
+        return jsonify(new_state.to_dict()), 201
     except Exception:
         abort(404)
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
-    """Updates an existing state object based on id
+    """Updates an existing state object based on the id
            Returns:
                A JSON dictionary of the udpated state in a 200 response
                400 response if not dict)
-               404 response if the id does not match an id in storage
+               404 response if the id does not match a storage id
     """
-    state = storage.get('State', state_id)
-    error_message = ""
-    if state:
-        content = request.get_json(silent=True)
-        if type(content) is dict:
-            ignore = ['id', 'created_at', 'updated_at']
-            for name, value in content.items():
-                if name not in ignore:
-                    setattr(state, name, value)
-            storage.save()
-            return jsonify(state.to_dict())
-        else:
-            error_message = "Not a JSON"
-            response = jsonify({'error': error_message})
-            response.status_code = 400
-            return response
-
-    abort(404)
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    req = request.get_json()
+    if req is None:
+        abort(400, "Not a JSON")
+    req.pop("id", None)
+    req.pop("created_at", None)
+    req.pop("updated_at", None)
+    for key, val in req.items():
+        setattr(state, key, val)
+    state.save()
+    return jsonify(state.to_dict()), 200
