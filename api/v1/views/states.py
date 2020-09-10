@@ -6,7 +6,7 @@ from api.v1.views import app_views
 from flask import jsonify, request, abort
 
 
-@app_views.route('/states/', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def show_states():
     """Shows all states in storage
     """
@@ -61,7 +61,7 @@ def create_state():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update_state(state_id):
+def put_update_state(state_id):
     """Updates an existing state object based on the id
            Returns:
                A JSON dictionary of the udpated state in a 200 response
