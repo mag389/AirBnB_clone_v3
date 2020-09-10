@@ -43,7 +43,7 @@ def delete_place(place_id):
         abort(404)
     storage.delete(place)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route("/cities/<city_id>/places",
@@ -61,8 +61,9 @@ def place_post(city_id):
         abort(404)
     if "name" not in req:
         abort(400, "Missing name")
+    req["city_id"] = city_id
     new_place = models.place.Place(**req)
-    new_place["city_id"] = city_id
+    # setattr(new_place, "city_id", city_id)
     new_place.save()
     return jsonify(new_place.to_dict()), 201
 
