@@ -95,9 +95,16 @@ class TestFileStorage(unittest.TestCase):
         getstate = models.storage.get(State, newstate.id)
         self.assertEqual(newstate.id, getstate.id)
         newstate.delete()
+        models.storage.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_dbcount(self):
         """ tests count method in db storage """
         count = models.storage.count()
+        newstate = State(name="teststate")
+        newstate.save()
+        newcount = models.storage.count()
         self.assertIsInstance(count, int)
+        self.assertEqual(count + 1, newcount)
+        newstate.delete()
+        models.storage.save()
