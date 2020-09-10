@@ -9,6 +9,16 @@ from models.city import City
 from models.user import User
 
 
+@app_views.route("/places", strict_slashes=False, methods=['GET'])
+def all_places():
+    """all places, used for testing """
+    places = storage.all(Place).values()
+    retval = []
+    for obj in places:
+            retval.append(obj.to_dict())
+    return jsonify(retval)
+
+
 @app_views.route("/cities/<city_id>/places",
                  strict_slashes=False, methods=['GET'])
 def get_places(city_id):
@@ -16,10 +26,12 @@ def get_places(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
+    # print(city.id)
     places = storage.all(Place).values()
     retval = []
     for obj in places:
-        if obj.id == city.id:
+        # print(obj.city_id)
+        if obj.city_id == city.id:
             retval.append(obj.to_dict())
     return jsonify(retval)
 
