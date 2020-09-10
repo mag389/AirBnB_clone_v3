@@ -11,7 +11,7 @@ from models.review import Review
 
 @app_views.route("/places/<place_id>/reviews", strict_slashes=False,
                  methods=['GET'])
-def get_all_reviews():
+def get_all_reviews(place_id):
     """ routing for retrieving reviews by palce """
     place = storage.get(Place, place_id)
     if place is None:
@@ -19,7 +19,7 @@ def get_all_reviews():
     reviews = storage.all(Review).values()
     retval = []
     for obj in reviews:
-        if obj.place_id == place.id:
+        if obj.place_id == place_id:
             retval.append(obj.to_dict())
     return jsonify(retval)
 
@@ -84,6 +84,6 @@ def review_update(review_id):
     req.pop("created_at", None)
     req.pop("updated_at", None)
     for key, val in req.items():
-        setattr(user, key, val)
-    user.save()
-    return jsonify(user.to_dict()), 200
+        setattr(review, key, val)
+    review.save()
+    return jsonify(review.to_dict()), 200
