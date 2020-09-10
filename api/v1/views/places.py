@@ -82,7 +82,7 @@ def place_update(place_id):
     req.pop("created_at", None)
     req.pop("updated_at", None)
     req.pop("user_id", None)
-    req.pop("city_is", None)
+    req.pop("city_id", None)
     for key, val in req.items():
         setattr(place, key, val)
     place.save()
