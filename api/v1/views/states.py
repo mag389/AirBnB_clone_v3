@@ -29,6 +29,7 @@ def show_state(state_id):
     except Exception:
         abort(404)
 
+
 @app_views.route(
     '/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
@@ -40,6 +41,7 @@ def delete_state(state_id):
     storage.delete(state_to_delete)
     storage.save()
     return jsonify({})
+
 
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def create_state():
@@ -56,6 +58,7 @@ def create_state():
         return jsonify(new_state.to_dict()), 201
     except Exception:
         abort(404)
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
