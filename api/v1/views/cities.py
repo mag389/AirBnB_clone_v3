@@ -42,9 +42,10 @@ def delete_city(state_id):
     city_to_delete = storage.get(City, state_id)
     if city_to_delete is None:
         abort(404)
-    storage.delete(city_to_delete)
+    city_to_delete.delete()
+    # storage.delete(city_to_delete)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/states/<state_id>/cities',
