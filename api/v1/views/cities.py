@@ -28,22 +28,22 @@ def show_one_city(city_id):
     """Shows a specific state based on id
     """
     city = storage.get(City, city_id)
-    try:
+    if city is not None:
         return jsonify(city.to_dict())
-    except Exception:
+    else:
         abort(404)
 
 
 @app_views.route(
     '/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
-def delete_city(state_id):
+def delete_city(city_id):
     """Deletes a state based on storage id
     """
-    city_to_delete = storage.get(City, state_id)
+    city_to_delete = storage.get(City, city_id)
     if city_to_delete is None:
         abort(404)
-    city_to_delete.delete()
-    # storage.delete(city_to_delete)
+    # city_to_delete.delete()
+    storage.delete(city_to_delete)
     storage.save()
     return jsonify({}), 200
 
